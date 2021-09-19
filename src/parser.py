@@ -11,13 +11,11 @@ ip_regexp = r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"
 
 
 def log_reader(file_name):
-    total = 0
     with open(file_name) as file:
         log = file.read()
         ips = re.findall(ip_regexp, log)
         methods = re.findall(method_regexp, log)
         return {
-            "total_requests": total,
             "ips": ips,
             "methods": methods
         }
