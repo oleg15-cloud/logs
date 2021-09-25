@@ -35,24 +35,25 @@ def get_requests_methods(filename):
 def get_count_request(filename):
     count_request = 0
     with open(filename) as file:
-        for _ in file:
-            count_request += 1
+        for log in file:
+            request = re.search(ip_regexp, log)
+            method = re.search(method_regexp, log)
+            if request is not None and method is not None:
+                count_request += 1
     return count_request
 
 
 def get_longest_requests(filename):
     requests = []
     with open(filename) as file:
-        counter = 0
         for log in file:
-            counter += 1
             if re.search(ip_regexp, log) and re.search(method_regexp, log):
                 if re.search(url_regexp, log) and re.search(time_regexp, log):
                     requests.append([
                         re.search(ip_regexp, log).group(0),
                         re.search(method_regexp, log).group(1),
                         re.search(url_regexp, log).group(1),
-                        re.search(time_regexp, log).group(0)
+                        int(re.search(time_regexp, log).group(0))
                     ])
     return sorted(requests, key=itemgetter(3), reverse=True)[:3]
 
