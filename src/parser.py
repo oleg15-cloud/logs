@@ -38,7 +38,7 @@ def get_count_request(filename):
         for log in file:
             request = re.search(ip_regexp, log)
             method = re.search(method_regexp, log)
-            if request is not None and method is not None:
+            if request is not None:
                 count_request += 1
     return count_request
 
